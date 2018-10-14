@@ -5,22 +5,22 @@ body
 
 td
 {
-    color:CadetBlue;
+	color:CadetBlue;
 	font-family: "Arial"
 }
 
 fieldset
 {
-    background-color:azure;
-    max-width: 450px;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;   
-    border-radius:8px;
+	background-color:azure;
+	max-width: 450px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;   
+	border-radius:8px;
 }
 
 legend
 {
-    color:CadetBlue;
+	color:CadetBlue;
 	font-style: italic;
 	font-family: "Arial";
 }
