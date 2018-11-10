@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+
+	<head>
+		<style>
+		label {
+			width: 60px;
+			text-align: right;
+			padding-right: 5px;
+			display: inline-block;
+		}
+		input[type="number"] {
+			width:50px;
+			margin-right: 25px;
+		}
+		</style>
+	<script type="text/javascript" src="https://ff.kis.v2.scr.kaspersky-labs.com/1C015193-8FCF-5B4B-9364-2E005536D739/main.js" charset="UTF-8"></script></head>
+
+	<body onload="addForm();">
+
+		<h1>Add new input lines to HTML entry form</h1>
+		
+		<p>Enable users to add a row of fields to an HTML input form. In this code, after the HTML loads, addForm() is called. Clicking the Add Line button calls a function, addLine(), which calls addField() once for each field in the new input line. The elements, label and input, are formatted using CSS. </p>
+		
+		<button type="button" onclick="addLine();">Add Line</button>
+		<br />
+		<br />
+		
+		<div id="div1">
+		</div>
+		
+		<h1>Generate array of objects</h1>
+		
+		<p>Loop through the HTML form lines and store the data into an array of objects, where each property of an object contains the data in the input field of the HTML entry form. </p>
+		
+		<button type="button" onclick="genObjectArray();">Generate and Display Array of Objects</button>
+		<br />
+		
+		<div id="div2">
+		</div>
+		
+		<h1>Display table containing data from array of objects</h1>
+		
+		<p>Loop through the HTML form lines and store the data into an array of objects, where each property of an object contains the data in the input field of the HTML entry form. </p>
+		
+		<button type="button" onclick="genTable()">Generate and Display Table</button>
+		<br />
+		<br />
+		
+		<div id="div3">
+		<table id="thisTable" border="1">
+			<tr>
+				<th>Local Name</th>
+				<th>Local DOB</th>
+				<th>Local Age</th>
+				<th>Local Zodiac</th>
+			</tr>
+		</table>
+		</div>
+		
+		<script>
+		
+// GLOBAL VARIABLES
+
+var currentLine = 0;
+var inputWidth  = 10;
+var objArray    = [];
+
+// FUNCTIONS
+
+/* addForm()
+ * appends an entry form to an HTML element with id="div1"
+ */
+function addForm() {
+	// precondition: HTML must contain <div id="div1"> element
+
+	// create a new form element, and append to div1
+	var newelement = document.createElement("form");
+	newelement.setAttribute("id","form1");
+	var div1 = document.getElementById("div1");
+	div1.appendChild(newelement);
+
+	// create a new fieldset element, and append to form1
+	var newelement = document.createElement("fieldset");
+	newelement.setAttribute("id","fieldset1");
+	var form1 = document.getElementById("form1");
+	form1.appendChild(newelement);
+
+	// create a new legend element, and append to fieldset1
+	var newelement = document.createElement("legend");
+	var textnode = document.createTextNode("People ");
+	newelement.appendChild(textnode);
+	var fieldset1 = document.getElementById("fieldset1");
+	fieldset1.appendChild(newelement);
+
+	// create a new label element, and append to fieldset1
+	var newelement = document.createElement("label");
+	newelement.setAttribute("for","fname"+currentLine);
+	var textnode = document.createTextNode("Given Name");
+	newelement.appendChild(textnode);
+	var fieldset1 = document.getElementById("fieldset1");
+	fieldset1.appendChild(newelement);
+
+	// create a new input element, and append to fieldset1
+	var newelement = document.createElement("input");
+	newelement.setAttribute("name","fname"+currentLine);
+	newelement.setAttribute("id","fname"+currentLine);
+	newelement.setAttribute("type","text");
+	newelement.setAttribute("placeholder","Jane");
+	newelement.setAttribute("size",10);
+	if (currentLine==0) newelement.setAttribute("autofocus","autofocus");
+	var fieldset1 = document.getElementById("fieldset1");
+	fieldset1.appendChild(newelement);
+
+	// add more fields 
+	addField("fieldset1", "lname", "Surname", "text", "Doe", inputWidth);
+	addField("fieldset1", "sBDay", "Solar Birth Day", "number", "18", inputWidth);
+	addField("fieldset1", "sBMonth", "Solar Birth Month", "number", "18", inputWidth);
+	addField("fieldset1", "sBYear", "Solar Birth Year", "number", "18", inputWidth);
+	addField("fieldset1", "country", "Country", "text", "USA", inputWidth);
+
+	// add line break 
+	var newelement = document.createElement("br");
+	var fieldset1 = document.getElementById("fieldset1");
+	fieldset1.appendChild(newelement);
+
+	// increment line counter
+	currentLine++;
+}
+
+/* addLine()
+ * inserts all labels and input elements for one row of a form
+ */
+function addLine () {
+	// precondition: inputWidth global variable must be set
+	// precondition: call from addForm() so HTML element with id="fieldset1" exists
+	
+	addField("fieldset1", "fname", "Given Name", "text", "Jane", inputWidth);
+	addField("fieldset1", "lname", "Surname", "text", "Doe", inputWidth);
+	addField("fieldset1", "sBDay", "Solar Birth Day", "number", "18", inputWidth);
+	addField("fieldset1", "sBMonth", "Solar Birth Month", "number", "18", inputWidth);
+	addField("fieldset1", "sBYear", "Solar Birth Year", "number", "18", inputWidth);
+	addField("fieldset1", "country", "Country", "text", "USA", inputWidth);
+	var newelement = document.createElement("br");
+	var fieldset1 = document.getElementById("fieldset1");
+	fieldset1.appendChild(newelement);
+	currentLine++;
+}
+
+/* addField()
+ * inserts one label one input element into a row of a form 
+ */
+function addField(formId, namePrefix, labelText, dataType, placeholder, fieldSize) {
+	// precondition: currentLine (global variable) must be set
+	// precondition: objArray[] (global variable) must be declared
+	// precondition: call from addLine() so HTML element with id=formID exists
+
+	// create a new label element, and append to form (or fieldset)
+	var n = document.createElement("label");
+	n.setAttribute("for",namePrefix+currentLine);
+	var t = document.createTextNode(labelText + " " );
+	n.appendChild(t);
+	var f = document.getElementById(formId);
+	f.appendChild(n);
+	
+	if(namePrefix=="country") {
+	
+		// create a new select element and append to form (tutorial from stackoverflow)
+		var fieldSet = document.getElementById("fieldset1");
+		var options = ["China", "USA"];
+		var list = document.createElement("select");
+		list.setAttribute("id", namePrefix+currentLine);
+		fieldSet.appendChild(list);
+		
+		// add options to select element(tutorial from stackoverflow)
+		for (var i = 0; i < options.length; i++) {
+			var option = document.createElement("option");
+			option.value = options[i];
+			option.text  = options[i];
+			list.appendChild(option);
+		}	
+	}
+	
+	else{
+		// create a new input element, and append to form
+		var n = document.createElement("input");
+		n.setAttribute("name",namePrefix+currentLine);
+		n.setAttribute("id",namePrefix+currentLine);
+		n.setAttribute("type",dataType);
+		n.setAttribute("placeholder",placeholder);
+		n.setAttribute("size",fieldSize);
+		var f = document.getElementById(formId);
+		f.appendChild(n);
+	}
+}
+
+/* genObjectArray()
+ * generates content for an array of objects, 
+ * where each element of the array 
+ * is an object containing the data entered in one line of the form 
+ */
+function genObjectArray() {
+	// precondition: HTML must contain <div id="div2"> element
+	// precondition: currentLine (global variable) must be set
+
+	// generate objArray from HTML form elements
+
+	for(i = 0; i < currentLine; i++) {
+		objArray[i] = {
+			'fname'     :document.getElementById("fname"+i).value,
+			'lname'     :document.getElementById("lname"+i).value,
+			'sBDay'     :parseInt(document.getElementById("sBDay"+i).value)?parseInt(document.getElementById("sBDay"+i).value):0,
+			'sBMonth'   :parseInt(document.getElementById("sBMonth"+i).value)?parseInt(document.getElementById("sBMonth"+i).value):0,
+			'sBYear'    :parseInt(document.getElementById("sBYear"+i).value)?parseInt(document.getElementById("sBYear"+i).value):0,
+			'country'   :document.getElementById("country"+i).value,
+			'countryAge':function () {
+				if('China'==this.country)
+					return parseInt(2018 - this.sBYear)+1; 
+				else 
+					return parseInt(2018 - this.sBYear);
+				}
+		};
+	}
+
+	// display objArray
+	var divContent = "<ol start='0'>";
+	objArray.forEach(function(e) {
+		divContent += '<li>';
+		divContent += JSON.stringify(e);
+		divContent += ' ... countryAge() == ' + e.countryAge();
+		divContent += '</li>';
+	});
+	divContent += "</ol>";
+	document.getElementById("div2").innerHTML = divContent;
+}
+
+/* genTable()
+ * generates an HTML table containing localized output from 
+ */
+function genTable() {
+	for(i = 0; i < currentLine; i++){
+		var table = document.getElementById("thisTable");
+		var row = table.insertRow(-1);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+	
+		if('China'==document.getElementById("country"+i).value)
+			cell1.innerHTML = document.getElementById("lname"+i).value + " " + document.getElementById("fname"+i).value;
+		else
+			cell1.innerHTML = document.getElementById("fname"+i).value + " " + document.getElementById("lname"+i).value;
+
+		if('China'==document.getElementById("country"+i).value)
+			cell2.innerHTML = document.getElementById("sBYear"+i).value + "-" + document.getElementById("sBMonth"+i).value + "-" + document.getElementById("sBDay"+i).value;
+		else
+			cell2.innerHTML = document.getElementById("sBMonth"+i).value + "-" + document.getElementById("sBDay"+i).value + "-" + document.getElementById("sBYear"+i).value;
+			
+		if('China'==document.getElementById("country"+i).value)
+			cell3.innerHTML = parseInt(2018 - document.getElementById("sBYear"+i).value) + 1;
+		else
+			cell3.innerHTML = parseInt(2018 - document.getElementById("sBYear"+i).value);
+			
+		if('China'==document.getElementById("country"+i).value){
+			if(document.getElementById("sBYear"+i).value % 12 == 0)
+				cell4.innerHTML = "Monkey";
+			if(document.getElementById("sBYear"+i).value % 12 == 1)
+				cell4.innerHTML = "Rooster";
+			if(document.getElementById("sBYear"+i).value % 12 == 2)
+				cell4.innerHTML = "Dog";
+			if(document.getElementById("sBYear"+i).value % 12 == 3)
+				cell4.innerHTML = "Pig";
+			if(document.getElementById("sBYear"+i).value % 12 == 4)
+				cell4.innerHTML = "Rat";
+			if(document.getElementById("sBYear"+i).value % 12 == 5)
+				cell4.innerHTML = "Ox";
+			if(document.getElementById("sBYear"+i).value % 12 == 6)
+				cell4.innerHTML = "Tiger";
+			if(document.getElementById("sBYear"+i).value % 12 == 7)
+				cell4.innerHTML = "Rabbit";
+			if(document.getElementById("sBYear"+i).value % 12 == 8)
+				cell4.innerHTML = "Dragon";
+			if(document.getElementById("sBYear"+i).value % 12 == 9)
+				cell4.innerHTML = "Snake";
+			if(document.getElementById("sBYear"+i).value % 12 == 10)
+				cell4.innerHTML = "Horse";
+			if(document.getElementById("sBYear"+i).value % 12 == 11)
+				cell4.innerHTML = "Goat";
+		}		
+		else if('USA'==document.getElementById("country"+i).value){
+			if(document.getElementById("sBMonth"+i).value == 12 && document.getElementById("sBDay"+i).value >= 22 || document.getElementById("sBMonth"+i).value == 01 && document.getElementById("sBDay"+i).value <= 19 )
+				cell4.innerHTML = "Capricorn";
+			if(document.getElementById("sBMonth"+i).value == 01 && document.getElementById("sBDay"+i).value >= 20 || document.getElementById("sBMonth"+i).value == 02 && document.getElementById("sBDay"+i).value <= 18 )
+				cell4.innerHTML = "Aquarius";
+			if(document.getElementById("sBMonth"+i).value == 02 && document.getElementById("sBDay"+i).value >= 19 || document.getElementById("sBMonth"+i).value == 03 && document.getElementById("sBDay"+i).value <= 20 )
+				cell4.innerHTML = "Pisces";
+			if(document.getElementById("sBMonth"+i).value == 03 && document.getElementById("sBDay"+i).value >= 21 || document.getElementById("sBMonth"+i).value == 04 && document.getElementById("sBDay"+i).value <= 19 )
+				cell4.innerHTML = "Aries";
+			if(document.getElementById("sBMonth"+i).value == 04 && document.getElementById("sBDay"+i).value >= 20 || document.getElementById("sBMonth"+i).value == 05 && document.getElementById("sBDay"+i).value <= 20 )
+				cell4.innerHTML = "Taurus";
+			if(document.getElementById("sBMonth"+i).value == 05 && document.getElementById("sBDay"+i).value >= 21 || document.getElementById("sBMonth"+i).value == 06 && document.getElementById("sBDay"+i).value <= 20 )
+				cell4.innerHTML = "Gemini";
+			if(document.getElementById("sBMonth"+i).value == 06 && document.getElementById("sBDay"+i).value >= 21 || document.getElementById("sBMonth"+i).value == 07 && document.getElementById("sBDay"+i).value <= 22 )
+				cell4.innerHTML = "Cancer";
+			if(document.getElementById("sBMonth"+i).value == 07 && document.getElementById("sBDay"+i).value >= 23 || document.getElementById("sBMonth"+i).value == 08 && document.getElementById("sBDay"+i).value <= 22 )
+				cell4.innerHTML = "Leo";
+			if(document.getElementById("sBMonth"+i).value == 08 && document.getElementById("sBDay"+i).value >= 23 || document.getElementById("sBMonth"+i).value == 09 && document.getElementById("sBDay"+i).value <= 22 )
+				cell4.innerHTML = "Virgo";
+			if(document.getElementById("sBMonth"+i).value == 09 && document.getElementById("sBDay"+i).value >= 23 || document.getElementById("sBMonth"+i).value == 10 && document.getElementById("sBDay"+i).value <= 22 )
+				cell4.innerHTML = "Libra";
+			if(document.getElementById("sBMonth"+i).value == 10 && document.getElementById("sBDay"+i).value >= 23 || document.getElementById("sBMonth"+i).value == 11 && document.getElementById("sBDay"+i).value <= 21 )
+				cell4.innerHTML = "Scorpio";
+			if(document.getElementById("sBMonth"+i).value == 11 && document.getElementById("sBDay"+i).value >= 22 || document.getElementById("sBMonth"+i).value == 12 && document.getElementById("sBDay"+i).value <= 21 )
+				cell4.innerHTML = "Sagittarius";
+		}		
+	}
+}
+			</script>
+			
+		</body>
+
+	</html>
+
