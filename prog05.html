@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+	<head>
+		<style>
+			label {
+				width: 120px;
+				text-align: right;
+				padding-right: 5px;
+				display: inline-block;
+			}
+			input[type="number"] {
+				width:50px;
+				margin-right: 25px;
+			}
+		</style>
+		<script type="text/javascript" src="https://ff.kis.v2.scr.kaspersky-labs.com/1C015193-8FCF-5B4B-9364-2E005536D739/main.js" charset="UTF-8"></script>
+	</head>
+	
+	<body onload = Form.createForm()>
+	<div class="container">
+		<h1 align="center">Prog 05</h1>
+		
+		<h2>Add new input lines</h2>
+		
+		<button type="button" onclick= Form.addLine()>Add Line</button>
+		<br />
+		<br />
+		
+		<div id="div1">
+		</div>
+		
+		<h2>Create an Array of People</h2>
+		
+		<button type="button" onclick="createPeople();">Add People</button>
+		<br />
+		<br />
+		
+		<div id="div2">
+		</div>
+		
+		<h2>Create a Table</h2>
+		
+		<button type="button" onclick="makeTable();">Make a Table</button>
+		<br />
+		<br />
+		
+		<div id="div3">
+		</div>
+		
+	</div>
+	<script>
+// Global Variables
+var count = 0;
+var inputWidth = 15;
+var People = [];
+
+/**
+* Stuffed all the functions from prog04 into a class
+* Made the functions static because the tutorial for
+* using them without the static modifier looked like
+* more work than I wanted to do.
+*/
+class Form {
+	static createForm(){
+		// Make a form and start appending stuff to it.
+		var newelement = document.createElement("form");
+		newelement.setAttribute("id", "form1");
+		var div1 = document.getElementById("div1");
+		div1.appendChild(newelement);
+		// Append a fieldset
+		var newelement = document.createElement("fieldset");
+		newelement.setAttribute("id", "fieldset1");
+		var form1 = document.getElementById("form1");
+		form1.appendChild(newelement);
+		// Append a legend
+		var newelement = document.createElement("legend");
+		var legendtext = document.createTextNode("People");
+		newelement.appendChild(legendtext);
+		var fieldset1 = document.getElementById("fieldset1");
+		fieldset1.appendChild(newelement);
+		// Make a label
+		var newelement = document.createElement("label");
+		newelement.setAttribute("for", "fname"+count);
+		var labeltext = document.createTextNode("Given Name");
+		newelement.appendChild(labeltext);
+		var fieldset1 = document.getElementById("fieldset1");
+		fieldset1.appendChild(newelement);
+		// Add an input box
+		var newelement = document.createElement("input");
+		newelement.setAttribute("name", "fname"+count);
+		newelement.setAttribute("id", "fname"+count);
+		newelement.setAttribute("type", "text");
+		newelement.setAttribute("placeholder", "John");
+		newelement.setAttribute("size", 15);
+		if(count == 0) newelement.setAttribute("autofocus", "autofocus");
+		var fieldset1 = document.getElementById("fieldset1");
+		fieldset1.appendChild(newelement);
+		// Add the other fields
+		this.addField("fieldset1", "lname", "Surname", "text", "Doe", inputWidth);
+		this.addField("fieldset1", "sday", "Solar Birth Day", "number", "01", inputWidth);
+		this.addField("fieldset1", "smonth", "Solar Birth Month", "number", "01", inputWidth);
+		this.addField("fieldset1", "syear", "Solar Birth Year", "number", "01", inputWidth);
+		this.addCountryField("fieldset1", "country", "Country", "USA", "China");
+		// Add a line break for future lines
+		var newelement = document.createElement("br");
+		document.getElementById("fieldset1").appendChild(newelement);;
+		
+		// Increment the counter
+		count++;
+	}
+	
+	static addLine() {
+		this.addField("fieldset1", "fname", "Given Name", "text", "Doe", inputWidth);
+		this.addField("fieldset1", "lname", "Surname", "text", "Doe", inputWidth);
+		this.addField("fieldset1", "sday", "Solar Birth Day", "number", "01", inputWidth);
+		this.addField("fieldset1", "smonth", "Solar Birth Month", "number", "01", inputWidth);
+		this.addField("fieldset1", "syear", "Solar Birth Year", "number", "01", inputWidth);
+		this.addCountryField();
+		var newelement = document.createElement("br");
+		var fieldset1 = document.getElementById("fieldset1");
+		fieldset1.appendChild(newelement);
+		count++;
+	}
+	
+	// Talked to J. Groeschen about this portion
+	// he recommended creating a separate function
+	// for the drop down box.
+	static addCountryField(){
+		// Creates the label
+		var newlabel = document.createElement("label");
+		newlabel.setAttribute("for", "country"+count);
+		var labeltext = document.createElement("Country");
+		newlabel.appendChild(labeltext);
+		var fieldset1 = document.getElementById("fieldset1");
+		fieldset1.appendChild(newlabel);
+		// Create select element
+		var newelement = document.createElement("select");
+		newelement.setAttribute("id", "country"+count);
+		var firstoption = document.createElement("option");
+		firstoption.setAttribute("value", "USA");
+		var optiontext = document.createTextNode("USA");
+		firstoption.appendChild(optiontext);
+		newelement.appendChild(firstoption);
+		var secondoption = document.createElement("option");
+		secondoption.setAttribute("value", "China");
+		var optiontexttwo = document.createTextNode("China");
+		secondoption.appendChild(optiontexttwo);
+		newelement.appendChild(secondoption);
+		var fieldset1 = document.getElementById("fieldset1");
+		fieldset1.appendChild(newelement);
+	}
+	
+	static addField(formid, name, label, dataType, placeholder, fieldsize){
+		var n = document.createElement("label");
+		n.setAttribute("for", name+count);
+		var t = document.createTextNode(label + " ");
+		n.appendChild(t);
+		var f = document.getElementById(formid);
+		f.appendChild(n);
+		var n = document.createElement("input");
+		n.setAttribute("name", name+count);
+		n.setAttribute("id", name+count);
+		n.setAttribute("type", dataType);
+		n.setAttribute("placeholder", placeholder);
+		n.setAttribute("size", fieldsize);
+		var f = document.getElementById(formid);
+		f.appendChild(n);
+	}
+}
+	
+	
+	
+	
+	
+	</script>
+	</body>
+</html>
