@@ -13,6 +13,12 @@
 				margin-right: 25px;
 			}
 		</style>
+		<!-- Found out putting the links in the head tags doesnt mess up all the other styling like I did in prog04 -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://ff.kis.v2.scr.kaspersky-labs.com/1C015193-8FCF-5B4B-9364-2E005536D739/main.js" charset="UTF-8"></script>
 	</head>
 	
@@ -110,7 +116,7 @@ class Form {
 	}
 	
 	static addLine() {
-		this.addField("fieldset1", "fname", "Given Name", "text", "Doe", inputWidth);
+		this.addField("fieldset1", "fname", "Given Name", "text", "John", inputWidth);
 		this.addField("fieldset1", "lname", "Surname", "text", "Doe", inputWidth);
 		this.addField("fieldset1", "sday", "Solar Birth Day", "number", "01", inputWidth);
 		this.addField("fieldset1", "smonth", "Solar Birth Month", "number", "01", inputWidth);
@@ -123,10 +129,8 @@ class Form {
 	}
 	
 	/** 
-	* Talked to J. Groeschen about this portion,
-	* he recommended creating a separate function
-	* for the drop down box, since my loop from prog04
-	* wouldn't work for some reason.
+	* Talked to J. Groeschen about this portion, my 
+	* loop from prog04 wouldn't work for some reason.
 	*/
 	static addCountryField(){
 		// Create the label
@@ -171,12 +175,19 @@ class Form {
 	}
 }
 
-// Holds...people objects? Not really sure what the goal was.
-// Or why I'm doing this. The genObjArray function created an
-// array of objects, which is what this does...
-// Also, apparently People is already a class? And declaring
-// 'People' as a new class was causing issues. So now it's 'NewPeople'.
+/**
+* Holds...people objects? Not really sure what the goal was.
+* Or why I'm doing this. The genObjArray function created an
+* array of objects, which is what this does...
+* Also, apparently People is already a class? And declaring
+* 'People' as a new class was causing issues. So now it's 'NewPeople'.
+* Found the duplicate class error in codepen.
+*/
 class NewPeople {
+	// Tried putting num inside the function as a counter variable
+	// but that didn't work, not really clear on why. Putting num
+	// outside the constructor broke the whole program. Seems to work
+	// fine as an arguement to the constructor though.
 	constructor(num){
 		this.fname = document.getElementById("fname"+num).value,
 		this.lname = document.getElementById("lname"+num).value,
@@ -184,7 +195,10 @@ class NewPeople {
 		this.smonth = document.getElementById("smonth"+num).value,
 		this.syear = document.getElementById("syear"+num).value,
 		this.county = document.getElementById("country"+num).value,
+		// Function inside the constructor to calculate local age.
 		this.countryAge = function(){
+			if("" == this.syear)
+				return NaN;
 			if("China" == this.country)
 				return parseInt(2018 - this.syear) + 1;
 			else
@@ -211,13 +225,86 @@ class NewPeople {
 	divContent += "</ol>";
 	document.getElementById("div2").innerHTML = divContent;
 	}
+	
+	static localName(){
+		if("China" == this.country)
+			return (this.lname + " " + this.fname);
+		else
+			return (this.fname + " " + this.lname);
+	}
+}
+
+// These were a pain to make. Didn't realize that a 
+// prototype change couldn't be done inside the class...
+NewPeople.prototype.zodiac = function(){
+	var sign = "";
+	if("China" == this.country){
+		if(this.syear % 12 == 0)
+			sign = "Monkey";
+		if(this.syear % 12 == 1)
+			sign = "Rooster";
+		if(this.syear % 12 == 2)
+			sign = "Dog";
+		if(this.syear % 12 == 3)
+			sign = "Pig";
+		if(this.syear % 12 == 4)
+			sign = "Rat";
+		if(this.syear % 12 == 5)
+			sign = "Ox";
+		if(this.syear % 12 == 6)
+			sign = "Tiger";
+		if(this.syear % 12 == 7)
+			sign = "Rabbit";
+		if(this.syear % 12 == 8)
+			sign = "Dragon";
+		if(this.syear % 12 == 9)
+			sign = "Snake";
+		if(this.syear % 12 == 10)
+			sign = "Horse";
+		if(this.syear % 12 == 11)
+			sign = "Goat";
+	}
+	else if("USA" == this.country){
+		if(document.getElementById("smonth"+i).value == 12 && document.getElementById("sday"+i).value >= 22 || document.getElementById("smonth"+i).value == 01 && document.getElementById("sday"+i).value <= 19 )
+			sign = "Capricorn";
+		if(document.getElementById("smonth"+i).value == 01 && document.getElementById("sday"+i).value >= 20 || document.getElementById("smonth"+i).value == 02 && document.getElementById("sday"+i).value <= 18 )
+			sign = "Aquarius";
+		if(document.getElementById("smonth"+i).value == 02 && document.getElementById("sday"+i).value >= 19 || document.getElementById("smonth"+i).value == 03 && document.getElementById("sday"+i).value <= 20 )
+			sign = "Pisces";
+		if(document.getElementById("smonth"+i).value == 03 && document.getElementById("sday"+i).value >= 21 || document.getElementById("smonth"+i).value == 04 && document.getElementById("sday"+i).value <= 19 )
+			sign = "Aries";
+		if(document.getElementById("smonth"+i).value == 04 && document.getElementById("sday"+i).value >= 20 || document.getElementById("smonth"+i).value == 05 && document.getElementById("sday"+i).value <= 20 )
+			sign = "Taurus";
+		if(document.getElementById("smonth"+i).value == 05 && document.getElementById("sday"+i).value >= 21 || document.getElementById("smonth"+i).value == 06 && document.getElementById("sday"+i).value <= 20 )
+			sign = "Gemini";
+		if(document.getElementById("smonth"+i).value == 06 && document.getElementById("sday"+i).value >= 21 || document.getElementById("smonth"+i).value == 07 && document.getElementById("sday"+i).value <= 22 )
+			sign = "Cancer";
+		if(document.getElementById("smonth"+i).value == 07 && document.getElementById("sday"+i).value >= 23 || document.getElementById("smonth"+i).value == 08 && document.getElementById("sday"+i).value <= 22 )
+			sign = "Leo";
+		if(document.getElementById("smonth"+i).value == 08 && document.getElementById("sday"+i).value >= 23 || document.getElementById("smonth"+i).value == 09 && document.getElementById("sday"+i).value <= 22 )
+			sign = "Virgo";
+		if(document.getElementById("smonth"+i).value == 09 && document.getElementById("sday"+i).value >= 23 || document.getElementById("smonth"+i).value == 10 && document.getElementById("sday"+i).value <= 22 )
+			sign = "Libra";
+		if(document.getElementById("smonth"+i).value == 10 && document.getElementById("sday"+i).value >= 23 || document.getElementById("smonth"+i).value == 11 && document.getElementById("sday"+i).value <= 21 )
+			sign = "Scorpio";
+		if(document.getElementById("smonth"+i).value == 11 && document.getElementById("sday"+i).value >= 22 || document.getElementById("smonth"+i).value == 12 && document.getElementById("sday"+i).value <= 21 )
+			sign = "Sagittarius";
+	}
+	return sign;
+}
+
+Object.prototype.localBirthday = function(){
+	if("China" == this.country)
+		return (this.syear + "-" + this.smonth + "-" + this.sday);
+	else
+		return (this.smonth + "-" + this.sday + "-" + this.syear);
 }
 
 // Same as the Form class, this is just to hold the guts
-// of the tables.
+// of the tables from prog04. Found better ways to implement
+// it from prog04 however.
 class Table {
 	static makeTable(){
-		var tablestuff = "<table class = 'table table-striped'>";
 	}
 }
 	</script>
