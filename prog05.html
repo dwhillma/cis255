@@ -18,7 +18,7 @@
 	
 	<body onload = Form.createForm()>
 	<div class="container">
-		<h1 align="center">Prog 05</h1>
+		<h1 align="center">Prog 05 - Prog 04, but with Classes</h1>
 		
 		<h2>Add new input lines</h2>
 		
@@ -31,7 +31,7 @@
 		
 		<h2>Create an Array of People</h2>
 		
-		<button type="button" onclick="createPeople();">Add People</button>
+		<button type="button" onclick= NewPeople.createPeople()>Add People</button>
 		<br />
 		<br />
 		
@@ -40,7 +40,7 @@
 		
 		<h2>Create a Table</h2>
 		
-		<button type="button" onclick="makeTable();">Make a Table</button>
+		<button type="button" onclick= Table.makeTable()>Make a Table</button>
 		<br />
 		<br />
 		
@@ -100,7 +100,7 @@ class Form {
 		this.addField("fieldset1", "sday", "Solar Birth Day", "number", "01", inputWidth);
 		this.addField("fieldset1", "smonth", "Solar Birth Month", "number", "01", inputWidth);
 		this.addField("fieldset1", "syear", "Solar Birth Year", "number", "01", inputWidth);
-		this.addCountryField("fieldset1", "country", "Country", "USA", "China");
+		this.addCountryField();
 		// Add a line break for future lines
 		var newelement = document.createElement("br");
 		document.getElementById("fieldset1").appendChild(newelement);;
@@ -122,18 +122,21 @@ class Form {
 		count++;
 	}
 	
-	// Talked to J. Groeschen about this portion
-	// he recommended creating a separate function
-	// for the drop down box.
+	/** 
+	* Talked to J. Groeschen about this portion,
+	* he recommended creating a separate function
+	* for the drop down box, since my loop from prog04
+	* wouldn't work for some reason.
+	*/
 	static addCountryField(){
-		// Creates the label
+		// Create the label
 		var newlabel = document.createElement("label");
 		newlabel.setAttribute("for", "country"+count);
 		var labeltext = document.createElement("Country");
 		newlabel.appendChild(labeltext);
 		var fieldset1 = document.getElementById("fieldset1");
 		fieldset1.appendChild(newlabel);
-		// Create select element
+		// Create select element and options
 		var newelement = document.createElement("select");
 		newelement.setAttribute("id", "country"+count);
 		var firstoption = document.createElement("option");
@@ -167,11 +170,56 @@ class Form {
 		f.appendChild(n);
 	}
 }
+
+// Holds...people objects? Not really sure what the goal was.
+// Or why I'm doing this. The genObjArray function created an
+// array of objects, which is what this does...
+// Also, apparently People is already a class? And declaring
+// 'People' as a new class was causing issues. So now it's 'NewPeople'.
+class NewPeople {
+	constructor(num){
+		this.fname = document.getElementById("fname"+num).value,
+		this.lname = document.getElementById("lname"+num).value,
+		this.sday = document.getElementById("sday"+num).value,
+		this.smonth = document.getElementById("smonth"+num).value,
+		this.syear = document.getElementById("syear"+num).value,
+		this.county = document.getElementById("country"+num).value,
+		this.countryAge = function(){
+			if("China" == this.country)
+				return parseInt(2018 - this.syear) + 1;
+			else
+				return parseInt(2018 - this.syear);
+			}
+	}
 	
+	// Just copied this directly from prog04, because
+	// why redo work? And also I don't understand how 
+	// it works.
+	static createPeople(){
+		for(var i = 0; i < count; i++){
+			People[i] = new NewPeople(i);
+		}
+		
+		var divContent = "<ol start='0'>";
+		People.forEach(function(e) {
+			divContent += '<li>';
+			divContent += JSON.stringify(e);
+			divContent += ' ... countryAge() == ' + e.countryAge();
+			divContent += '</li>';
+		});
 	
-	
-	
-	
+	divContent += "</ol>";
+	document.getElementById("div2").innerHTML = divContent;
+	}
+}
+
+// Same as the Form class, this is just to hold the guts
+// of the tables.
+class Table {
+	static makeTable(){
+		var tablestuff = "<table class = 'table table-striped'>";
+	}
+}
 	</script>
 	</body>
 </html>
