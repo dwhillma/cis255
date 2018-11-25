@@ -265,29 +265,29 @@ NewPeople.prototype.zodiac = function(){
 			sign = "Goat";
 	}
 	else if("USA" == this.country){
-		if(document.getElementById("smonth"+i).value == 12 && document.getElementById("sday"+i).value >= 22 || document.getElementById("smonth"+i).value == 01 && document.getElementById("sday"+i).value <= 19 )
+		if(this.smonth == 12 && this.sday >= 22 || this.smonth == 01 && this.sday <= 19 )
 			sign = "Capricorn";
-		if(document.getElementById("smonth"+i).value == 01 && document.getElementById("sday"+i).value >= 20 || document.getElementById("smonth"+i).value == 02 && document.getElementById("sday"+i).value <= 18 )
+		if(this.smonth == 01 && this.sday >= 20 || this.smonth == 02 && this.sday <= 18 )
 			sign = "Aquarius";
-		if(document.getElementById("smonth"+i).value == 02 && document.getElementById("sday"+i).value >= 19 || document.getElementById("smonth"+i).value == 03 && document.getElementById("sday"+i).value <= 20 )
+		if(this.smonth == 02 && this.sday >= 19 || this.smonth == 03 && this.sday <= 20 )
 			sign = "Pisces";
-		if(document.getElementById("smonth"+i).value == 03 && document.getElementById("sday"+i).value >= 21 || document.getElementById("smonth"+i).value == 04 && document.getElementById("sday"+i).value <= 19 )
+		if(this.smonth == 03 && this.sday >= 21 || this.smonth == 04 && this.sday <= 19 )
 			sign = "Aries";
-		if(document.getElementById("smonth"+i).value == 04 && document.getElementById("sday"+i).value >= 20 || document.getElementById("smonth"+i).value == 05 && document.getElementById("sday"+i).value <= 20 )
+		if(this.smonth == 04 && this.sday >= 20 || this.smonth == 05 && this.sday <= 20 )
 			sign = "Taurus";
-		if(document.getElementById("smonth"+i).value == 05 && document.getElementById("sday"+i).value >= 21 || document.getElementById("smonth"+i).value == 06 && document.getElementById("sday"+i).value <= 20 )
+		if(this.smonth == 05 && this.sday >= 21 || this.smonth == 06 && this.sday <= 20 )
 			sign = "Gemini";
-		if(document.getElementById("smonth"+i).value == 06 && document.getElementById("sday"+i).value >= 21 || document.getElementById("smonth"+i).value == 07 && document.getElementById("sday"+i).value <= 22 )
+		if(this.smonth == 06 && this.sday >= 21 || this.smonth == 07 && this.sday <= 22 )
 			sign = "Cancer";
-		if(document.getElementById("smonth"+i).value == 07 && document.getElementById("sday"+i).value >= 23 || document.getElementById("smonth"+i).value == 08 && document.getElementById("sday"+i).value <= 22 )
+		if(this.smonth == 07 && this.sday >= 23 || this.smonth == 08 && this.sday <= 22 )
 			sign = "Leo";
-		if(document.getElementById("smonth"+i).value == 08 && document.getElementById("sday"+i).value >= 23 || document.getElementById("smonth"+i).value == 09 && document.getElementById("sday"+i).value <= 22 )
+		if(this.smonth == 08 && this.sday >= 23 || this.smonth == 09 && this.sday <= 22 )
 			sign = "Virgo";
-		if(document.getElementById("smonth"+i).value == 09 && document.getElementById("sday"+i).value >= 23 || document.getElementById("smonth"+i).value == 10 && document.getElementById("sday"+i).value <= 22 )
+		if(this.smonth == 09 && this.sday >= 23 || this.smonth == 10 && this.sday <= 22 )
 			sign = "Libra";
-		if(document.getElementById("smonth"+i).value == 10 && document.getElementById("sday"+i).value >= 23 || document.getElementById("smonth"+i).value == 11 && document.getElementById("sday"+i).value <= 21 )
+		if(this.smonth == 10 && this.sday >= 23 || this.smonth == 11 && this.sday <= 21 )
 			sign = "Scorpio";
-		if(document.getElementById("smonth"+i).value == 11 && document.getElementById("sday"+i).value >= 22 || document.getElementById("smonth"+i).value == 12 && document.getElementById("sday"+i).value <= 21 )
+		if(this.smonth == 11 && this.sday >= 22 || this.smonth == 12 && this.sday <= 21 )
 			sign = "Sagittarius";
 	}
 	return sign;
@@ -305,6 +305,10 @@ Object.prototype.localBirthday = function(){
 // it from prog04 however.
 class Table {
 	static makeTable(){
+		var outString = "<table class='table table-striped'>";
+		outString += "<tr><th>Local Name</th><th>Local DOB</th><th>Local Age</th><th>Local Zodiac</th>";
+		var div3 = document.getElementById("div3");
+		div3.appendChild(outString);
 	}
 }
 	</script>
