@@ -325,15 +325,19 @@ class Table{
 			headerPlace.appendChild(headerStuff);
 			headerRow.appendChild(headerPlace);
 		}
-		this.addData = function() {
-		
-		}
+		addData();
 	}
 		// Add all the info from the input blocks
 	addData(){
 		for(var i = 0; i < pArray.length; i++){
+			var person = pArray[i];
+			// Start a new row
+			var newRow = document.createElement("tr");
+			newRow.setAttribute("id","row"+i);
+			var table1 = document.getElementById("table1");
+			table1.appendchild(newRow);
+			// Add data
 			
-		}
 	}
 }
 	</script>
