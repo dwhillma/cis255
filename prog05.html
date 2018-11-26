@@ -37,7 +37,7 @@
 		
 		<h2>Create an Array of People</h2>
 		
-		<button type="button" onclick= NewPeople.createPeople()>Add People</button>
+		<button type="button" onclick= People.createPeople()>Add People</button>
 		<br />
 		<br />
 		
@@ -58,7 +58,8 @@
 // Global Variables
 var count = 0;
 var inputWidth = 15;
-var People = [];
+var pArray = [];
+var headerInfo = ["Local Name", "Local DoB", "Local Age", "Zodiac"];
 
 /**
 * Stuffed all the functions from prog04 into a class
@@ -182,8 +183,9 @@ class Form {
 * Also, apparently People is already a class? And declaring
 * 'People' as a new class was causing issues. So now it's 'NewPeople'.
 * Found the duplicate class error in codepen.
+* It wasn't a class, I was using People as the array name...
 */
-class NewPeople {
+class People {
 	// Tried putting num inside the function as a counter variable
 	// but that didn't work, not really clear on why. Putting num
 	// outside the constructor broke the whole program. Seems to work
@@ -199,7 +201,7 @@ class NewPeople {
 		this.countryAge = function(){
 			if("" == this.syear)
 				return NaN;
-			if("China" == this.country)
+			if(this.country == "China")
 				return parseInt(2018 - this.syear) + 1;
 			else
 				return parseInt(2018 - this.syear);
@@ -211,11 +213,11 @@ class NewPeople {
 	// it works.
 	static createPeople(){
 		for(var i = 0; i < count; i++){
-			People[i] = new NewPeople(i);
+			pArray[i] = new People(i);
 		}
 		
 		var divContent = "<ol start='0'>";
-		People.forEach(function(e) {
+		pArray.forEach(function(e) {
 			divContent += '<li>';
 			divContent += JSON.stringify(e);
 			divContent += ' ... countryAge() == ' + e.countryAge();
@@ -236,7 +238,7 @@ class NewPeople {
 
 // These were a pain to make. Didn't realize that a 
 // prototype change couldn't be done inside the class...
-NewPeople.prototype.zodiac = function(){
+People.prototype.zodiac = function(){
 	var sign = "";
 	if("China" == this.country){
 		if(this.syear % 12 == 0)
@@ -300,15 +302,38 @@ Object.prototype.localBirthday = function(){
 		return (this.smonth + "-" + this.sday + "-" + this.syear);
 }
 
-// Same as the Form class, this is just to hold the guts
-// of the tables from prog04. Found better ways to implement
-// it from prog04 however.
-class Table {
+// Class Table is just a bin for the table's guts, because I wasn't sure
+// how to make your codepen work well with what I'd done up to this point.
+class Table{
+
 	static makeTable(){
-		var outString = "<table class='table table-striped'>";
-		outString += "<tr><th>Local Name</th><th>Local DOB</th><th>Local Age</th><th>Local Zodiac</th>";
+		// Make the table
+		var table1 = document.createElement("table");
+		table1.setAttribute("id", "table1");
+		table1.setAttribute("class", "table table-striped");
 		var div3 = document.getElementById("div3");
-		div3.appendChild(outString);
+		div3.appendChild(table1);
+		// Table Header
+		var headerRow = document.createElement("tr");
+		headerRow.setAttribute("id", "header1");
+		var table1 = document.getElementById("table1");
+		table1.appendChild(headerRow);
+		// Fill the header
+		for(var i = 0; i < headerInfo.length; i++){
+			var headerPlace = document.createElement("th");
+			var headerStuff = document.createTextNode(headerInfo[i]);
+			headerPlace.appendChild(headerStuff);
+			headerRow.appendChild(headerPlace);
+		}
+		this.addData = function() {
+		
+		}
+	}
+		// Add all the info from the input blocks
+	addData(){
+		for(var i = 0; i < pArray.length; i++){
+			
+		}
 	}
 }
 	</script>
