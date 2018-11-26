@@ -27,6 +27,7 @@
 		<h1 align="center">Prog 05 - Prog 04, but with Classes</h1>
 		
 		<h2>Add new input lines</h2>
+		<p>Click the 'Add Line' button to add new lines to the form, allowing for more people to be added to the list.</p>
 		
 		<button type="button" onclick= Form.addLine()>Add Line</button>
 		<br />
@@ -36,6 +37,7 @@
 		</div>
 		
 		<h2>Create an Array of People</h2>
+		<p>Click the 'Add People' button to create and display an array of objects</p>
 		
 		<button type="button" onclick= People.createPeople()>Add People</button>
 		<br />
@@ -45,6 +47,7 @@
 		</div>
 		
 		<h2>Create a Table</h2>
+		<p>Click 'Make a Table' to create and display a table representation of the data from the first section.</p>
 		<p>Note: You must click the 'Add People' button before creating a table</p>
 		
 		<button type="button" onclick= Table.makeTable()>Make a Table</button>
@@ -242,7 +245,7 @@ class People {
 // These were a pain to make. Didn't realize that a 
 // prototype change couldn't be done inside the class...
 People.prototype.zodiac = function(){
-	var sign = "";
+	var sign = "Must enter a full birthdate.";
 	if("China" == this.country){
 		if(this.syear % 12 == 0)
 			sign = "Monkey";
