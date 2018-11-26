@@ -60,6 +60,8 @@ var count = 0;
 var inputWidth = 15;
 var pArray = [];
 var headerInfo = ["Local Name", "Local DoB", "Local Age", "Zodiac"];
+var tableData = [];
+var tableCreated = "false";
 
 /**
 * Stuffed all the functions from prog04 into a class
@@ -228,7 +230,7 @@ class People {
 	document.getElementById("div2").innerHTML = divContent;
 	}
 	
-	static localName(){
+	localName(){
 		if("China" == this.country)
 			return (this.lname + " " + this.fname);
 		else
@@ -304,7 +306,7 @@ Object.prototype.localBirthday = function(){
 
 // Class Table is just a bin for the table's guts, because I wasn't sure
 // how to make your codepen work well with what I'd done up to this point.
-class Table{
+class Table {
 
 	static makeTable(){
 		// Make the table
@@ -313,31 +315,23 @@ class Table{
 		table1.setAttribute("class", "table table-striped");
 		var div3 = document.getElementById("div3");
 		div3.appendChild(table1);
-		// Table Header
-		var headerRow = document.createElement("tr");
-		headerRow.setAttribute("id", "header1");
+
+		var dataStuff = "<tr><th>Local Name</th><th>Local DOB</th><th>Local Age</th><th>Local Zodiac</th></tr>";
+		// Hopefully add the data...
+		for(var i = 0; i < count; i++){
+			dataStuff += "<tr><td>" + pArray[i].localName() + "</td>";
+			dataStuff += "<td>" + pArray[i].localBirthday() + "</td>";
+			dataStuff += "<td>" + pArray[i].countryAge() + "</td>";
+			dataStuff += "<td>" + pArray[i].zodiac() + "</td>";
+			dataStuff += "</tr>";
+			}
+		// Tried getting fancy and just appending the above directly to div3
+		// it...did not work :( Hence creating a table to stick in div3,
+		// and then appending it all to the table. Probably just missed a }
+		// somewhere, but it works now, and I don't want to break it.
 		var table1 = document.getElementById("table1");
-		table1.appendChild(headerRow);
-		// Fill the header
-		for(var i = 0; i < headerInfo.length; i++){
-			var headerPlace = document.createElement("th");
-			var headerStuff = document.createTextNode(headerInfo[i]);
-			headerPlace.appendChild(headerStuff);
-			headerRow.appendChild(headerPlace);
-		}
-		addData();
-	}
-		// Add all the info from the input blocks
-	addData(){
-		for(var i = 0; i < pArray.length; i++){
-			var person = pArray[i];
-			// Start a new row
-			var newRow = document.createElement("tr");
-			newRow.setAttribute("id","row"+i);
-			var table1 = document.getElementById("table1");
-			table1.appendchild(newRow);
-			// Add data
-		}
+		table1.innerHTML = dataStuff;
+		
 	}
 }
 	</script>
